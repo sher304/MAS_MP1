@@ -19,8 +19,8 @@ public class Main {
         Date date2 = new Date(114, 3, 2);
 
         if (Worker.getExtent().isEmpty()) {
-            Worker bill = new Worker("Bill", "Salmon", "0423123133", date1, Optional.empty(), "COMPTIA Sec+");
-            Worker sam = new Worker("Sam", "Bolt", null, date1, Optional.of(date2), "Marketing Comm");
+            Worker bill = new Worker("Bill", "Salmon", date1, Optional.empty(), "COMPTIA Sec+");
+            Worker sam = new Worker("Sam", "Bolt", date1, Optional.of(date2), "Marketing Comm");
         }
 
         for (Worker w: Worker.getExtent()) {

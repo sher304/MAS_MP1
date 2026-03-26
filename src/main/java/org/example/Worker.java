@@ -12,9 +12,9 @@ public class Worker extends Person implements Serializable {
     public List<String> certifications = new ArrayList<>();
     public static int baseMinimumSalary = 52;
     private static List<Worker> extent = new ArrayList<>();
-    public Worker(String name, String surname, String pesel,
+    public Worker(String name, String surname,
                   Date hireDate, Optional<Date> terminDate, String certificate) {
-        super(name, surname, pesel);
+        super(name, surname);
         if(certificate.isEmpty()) throw  new IllegalArgumentException("At least one Certificate needed ");
         this.hireDate = hireDate;
         this.terminDate = terminDate.orElse(null);
@@ -65,8 +65,7 @@ public class Worker extends Person implements Serializable {
     public String toString() {
         return " Worker Name: "
                 + this.name + " Surname "
-                + this.surname + " Pesel: "
-                + this.PESEL + " Hire Date: "
+                + this.surname + " Hire Date: "
                 + this.hireDate + " Termin Date: "
                 + this.getTerminDate().map(date -> date.toString()).orElse("Has no termin date") + " Certifications: "
                 + certifications.toString();

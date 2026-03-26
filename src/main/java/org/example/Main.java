@@ -13,25 +13,22 @@ public class Main {
         List<Worker> extend = Serializer.getExtend();
         Worker.setExtend(extend);
 
-        System.out.printf(Worker.getExtend().size() + " Extend load successfully");
+        System.out.printf(Worker.getExtent().size() + " Extend load successfully");
 
-        Date date1 = new Date(2012, 9, 3);
-        Date date2 = new Date(2024, 2, 2);
-        Date date3 = new Date(2025, 1, 13);
+        Date date1 = new Date(112, 8, 3);
+        Date date2 = new Date(114, 3, 2);
 
-        if (Worker.getExtend().isEmpty()) {
-            Worker bill = new Worker("Bill", "Salmon", "0423123133", date1, null, "COMPTIA Sec+");
-            Worker sam = new Worker("Sam", "Bolt", null, date1, date2, "Marketing Comm");
-            sam.addNewCertificate("ICS2 CC");
-            sam.addNewCertificate("Workshop BA", date3);
+        if (Worker.getExtent().isEmpty()) {
+            Worker bill = new Worker("Bill", "Salmon", "0423123133", date1, Optional.empty(), "COMPTIA Sec+");
+            Worker sam = new Worker("Sam", "Bolt", null, date1, Optional.of(date2), "Marketing Comm");
         }
 
-        for (Worker w: Worker.getExtend()) {
+        for (Worker w: Worker.getExtent()) {
             System.out.println(w.toString());
             System.out.println(w.workingYears() + " Working years");
         }
         System.out.println("Static salary: " + Worker.baseMinimumSalary);
 
-        Serializer.save(Worker.getExtend());
+        Serializer.save(Worker.getExtent());
     }
 }

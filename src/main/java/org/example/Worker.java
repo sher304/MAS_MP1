@@ -11,15 +11,15 @@ public class Worker extends Person implements Serializable {
     public Date terminDate;
     public List<String> certifications = new ArrayList<>();
     public static int baseMinimumSalary = 52;
-    private static List<Worker> extend = new ArrayList<>();
+    private static List<Worker> extent = new ArrayList<>();
     public Worker(String name, String surname, String pesel,
-                  Date hireDate, Date terminDate, String certificate) {
+                  Date hireDate, Optional<Date> terminDate, String certificate) {
         super(name, surname, pesel);
         if(certificate.isEmpty()) throw  new IllegalArgumentException("At least one Certificate needed ");
         this.hireDate = hireDate;
-        this.terminDate = terminDate;
+        this.terminDate = terminDate.orElse(null);
         this.certifications.add(certificate);
-        this.extend.add(this);
+        this.extent.add(this);
     }
 
     public int workingYears() {
@@ -28,20 +28,37 @@ public class Worker extends Person implements Serializable {
         return (int) (diff / (1000L * 60 * 60 * 24 * 365));
     }
 
-    public void addNewCertificate(String name) {
-        certifications.add(name);
+    public Date getHireDate() {
+        return hireDate;
     }
 
-    public void addNewCertificate(String name, Date validDate) {
-        this.certifications.add(name + " (Valid until: " + validDate.toString() + ")");
+    public void setHireDate(Date hireDate) {
+        this.hireDate = hireDate;
     }
 
-    public static List<Worker> getExtend() {
-        return  extend;
+    public Optional<Date> getTerminDate() {
+        return Optional.ofNullable(this.terminDate);
     }
 
-    public static void setExtend(List<Worker> workersExtend) {
-        extend = workersExtend;
+    public void setTerminDate(Optional<Date> terminDate) {
+        this.terminDate = terminDate.orElse(null);
+    }
+
+    public double calculateBonus() {
+        return baseMinimumSalary * 0.25;
+    }
+
+    public double calculateBonus(double xg) {
+        if(xg == 0) throw new IllegalArgumentException("Bonus xg should be more than 0");
+        return  baseMinimumSalary * 0.25 * xg;
+    }
+
+    public static List<Worker> getExtent() {
+        return  extent;
+    }
+
+    public static void setExtend(List<Worker> workersExtent) {
+        extent = workersExtent;
     }
 
     @Override
@@ -50,6 +67,8 @@ public class Worker extends Person implements Serializable {
                 + this.name + " Surname "
                 + this.surname + " Pesel: "
                 + this.PESEL + " Hire Date: "
-                + this.hireDate + " Certifications: " + certifications.toString();
+                + this.hireDate + " Termin Date: "
+                + this.getTerminDate().map(date -> date.toString()).orElse("Has no termin date") + " Certifications: "
+                + certifications.toString();
     }
 }
